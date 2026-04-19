@@ -22,7 +22,8 @@ public class HelloWorldController {
     @GetMapping("/")
     public String hello(HttpServletRequest request)
     {
-        return "Hello World"+" Your session ID is : "+request.getSession().getId();
+//        return "Hello World"+" Your session ID is : "+request.getSession().getId();
+        return "Hello World";
     }
 
     List<Student> students=new ArrayList<>(
@@ -58,24 +59,14 @@ public class HelloWorldController {
         return ResponseEntity.status(HttpStatus.CREATED).body(student);
     }
 
+
+    // csrf is disabled in security config, so this endpoint will return null
     @GetMapping("/csrf")
     public ResponseEntity<CsrfToken> getCsrfToken(HttpServletRequest request)
     {
         CsrfToken csrfToken = (CsrfToken) request.getAttribute("_csrf");
+        // returns masked csrf token: underlying token is constant per session
         return ResponseEntity.ok(csrfToken);
-    }
-
-    public ResponseEntity<Student> addStudentAuto(@RequestBody Student student)
-    {
-        // how can I build a post request itself in the controller?
-        // and the fire the request from here?
-        // also find out why everytime a try to get the csrf token, I get a new token ?
-
-        // check
-
-
-        return  ResponseEntity.status(HttpStatus.CREATED).body(student);
-
     }
 
 
